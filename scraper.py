@@ -6,15 +6,12 @@ from multiprocessing.dummy import Pool
 from multiprocessing import cpu_count
 import grequests
 
-start_urls = ['http://www.amazon.com/Best-Sellers-Arts-Crafts-Sewing/zgbs/arts-crafts/ref=zg_bs_nav_0', 
-'http://www.amazon.com/Best-Sellers-Home-Kitchen/zgbs/home-garden/ref=zg_bs_nav_0', 
-'http://www.amazon.com/Best-Sellers-Office-Products/zgbs/office-products/ref=zg_bs_nav_0', 
-'http://www.amazon.com/Best-Sellers-Industrial-Scientific/zgbs/industrial/ref=zg_bs_nav_0']
+start_urls = ['http://www.livemaster.ru/search.php?vr=0&searchtype=1&search=%D1%8E%D0%B1%D0%BA%D0%B8+%D0%B1%D0%BE%D1%85%D0%BE']
 pool = Pool(cpu_count() * 20)
 
 def scrape(response, **kwargs):
         listing_soup = bs(response.text, 'lxml')
-        asin_nums = listing_soup.find_all('div', 'zg_itemImmersion')
+        asin_nums = listing_soup.find_all('div', 'b-item')
         for asin_num in asin_nums:
             asin = ''
             try:
